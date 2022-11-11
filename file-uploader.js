@@ -14,12 +14,14 @@ var file = "./Outgoing/example.pdf";
 var testBucket,
   testObject = "testObject",
   testUrl;
+var queue = "minio";
 
 mClient.listBuckets(function (e, buckets) {
   if (e) return console.log(e);
   testBucket = buckets[0];
 
-  console.log("Usefull bucket is found.");
+  console.log("The first item of bucket list is found.");
+  console.log(testBucket);
 
   var metaData = {
     "Content-Type": "application/ootet-stream",
@@ -35,7 +37,7 @@ mClient.listBuckets(function (e, buckets) {
     function (err, etag) {
       if (err) return console.log(err);
 
-      console.log("File uploaded successfully.");
+      console.log("Upload the file successfully.");
 
       mClient.presignedGetObject(
         testBucket.name,
@@ -45,19 +47,25 @@ mClient.listBuckets(function (e, buckets) {
           if (e) return console.log(e);
           testUrl = presignedUrl;
 
-          console.log("Url:");
+          console.log("Got the Url:");
           console.log(testUrl);
 
           amqp.connect("amqp://localhost", function (error0, connection) {
             if (error0) {
               throw error0;
             }
+        
+            console.log("Connected to the local RabbitMQ Server.");
+        
             connection.createChannel(function (error1, channel) {
               if (error1) {
                 throw error1;
               }
-              var queue = "hello";
-              var msg = testUrl;
+              
+              console.log("Create the channel to send a message into queue.");
+              
+
+              const msg = testUrl;
 
               channel.assertQueue(queue, {
                 durable: false,
@@ -68,9 +76,9 @@ mClient.listBuckets(function (e, buckets) {
             });
 
             // setTimeout(function() {
-            //   connection.close();
-            //   process.exit(0)
-            //   }, 500);
+              // connection.close();
+              // process.exit(0)
+              // }, 500);
           });
         }
       );
