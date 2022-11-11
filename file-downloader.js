@@ -15,7 +15,7 @@ const mClient = new Minio.Client({
 const INCOMING_PATH = "./Incoming/example.pdf";
 var queue = "minio";
 
-const file = fs.createWriteStream(INCOMING_PATH);
+
 
 
 amqp.connect("amqp://localhost", function (error0, conn) {
@@ -42,12 +42,13 @@ amqp.connect("amqp://localhost", function (error0, conn) {
 
         http.get(msg.content.toString(), function(response) {
           console.log("Start downloading.");
-          
+          const file = fs.createWriteStream(INCOMING_PATH);
           response.pipe(file);
 
           file.on("finish", () => {
             file.close();
             console.log("Download Completed!");
+            file.end();
           })
         });
       } else {
