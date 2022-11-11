@@ -1,4 +1,4 @@
-var amqp = rquire("amqplib/callback_api");
+var amqp = require("amqplib/callback_api");
 var amqpConn = null;
 
 function start(content) {
