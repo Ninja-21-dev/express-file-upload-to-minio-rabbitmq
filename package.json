@@ -39,6 +39,7 @@
     "crypto-browserify": "^3.12.0",
     "es6-error": "^4.1.1",
     "fast-xml-parser": "^3.17.5",
+    "g": "^2.0.1",
     "ipaddr.js": "^2.0.1",
     "json-stream": "^1.0.0",
     "lodash": "^4.17.21",
@@ -53,6 +54,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.10",
+    "@types/minio": "^7.0.14",
     "babelify": "^10.0.0",
     "browserify": "^16.5.2",
     "chai": "^4.2.0",
