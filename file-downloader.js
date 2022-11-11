@@ -14,7 +14,7 @@ var testBucket,
   testObject = "testObject",
   testUrl;
 
-amqp.connect("amqp://localhost", function (error0, connection) {
+amqp.connect("amqp://localhost", function (error0, conn) {
   if (error0) {
     throw error0;
   }
